@@ -1,0 +1,1 @@
+this is a text file for initializing and testing git in my laptop.
