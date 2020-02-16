@@ -1,14 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Navbar } from "./Navbar/navbar";
-import { HomePage } from "./Pages/HomePage";
+
+import { BasePage } from "./BasePage.js"
+
 
 ReactDOM.render(
-  <div>
-    <Navbar />
-    <HomePage />
-  </div>,
+  <BasePage />,
   document.getElementById("root")
 );
