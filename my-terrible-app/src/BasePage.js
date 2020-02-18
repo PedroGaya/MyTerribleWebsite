@@ -4,7 +4,7 @@ import { SampleArticle } from "./Pages/SampleArticle.js";
 import { SidebarContent } from "./Sidebar/SidebarContent.js";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,18 +17,6 @@ export const BasePage = () => {
   return (
     <div className="container-fluid h-100">
       <div className="row h-100">
-        {/* Navbar */}
-        <nav className="navbar navbar-light bg-light" style={{ width: "100%" }}>
-          <div>
-            <h2>Pedro Gaya</h2>
-          </div>
-          {toggled ? null : (
-            <button className="btn btn-light" onClick={() => setToggled(true)}>
-              <FontAwesomeIcon icon={faBars} />
-            </button>
-          )}
-        </nav>
-
         {/* Sidebar */}
         {toggled ? (
           <div className="col-sm-3 sticky-top" id="sidebar">
@@ -39,14 +27,40 @@ export const BasePage = () => {
                 style={btnCSS}
                 onClick={() => setToggled(false)}
               >
-                <FontAwesomeIcon icon={faBars} />
+                <FontAwesomeIcon icon={faArrowLeft} />
               </button>
             </div>
           </div>
         ) : null}
 
         {/* Content */}
-        <div className="col col-sm-8" style={{ margin: "auto" }}>
+        <div
+          className="col col-m-8"
+          style={{
+            margin: "0",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          {/* Navbar */}
+          <div className="row">
+            <nav
+              className="navbar"
+              style={{ postion: "fixed", width: "100%", background: "#777777" }}
+            >
+              <h2 className="ml-auto">Pedro Gaya</h2>
+              {toggled ? null : (
+                <button
+                  className="btn mr-auto"
+                  style={{ background: "#777777" }}
+                  onClick={() => setToggled(true)}
+                >
+                  <FontAwesomeIcon icon={faBars} />
+                </button>
+              )}
+            </nav>
+          </div>
+
           <div style={{ marginLeft: "auto", marginRight: "auto" }}>
             <SampleArticle />
           </div>
