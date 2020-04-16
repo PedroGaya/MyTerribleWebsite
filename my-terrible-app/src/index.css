@@ -1,13 +1,5 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
+  background-color:#AAAAAA;
   margin: 0px;
-}
-
-#sidebar {
-  display: flex;
-  width: 250px;
-  height: 100vh;
-  background-color: #101B2D;
-  color: #B5B5B5;
-  transition: 0.3;
 }
