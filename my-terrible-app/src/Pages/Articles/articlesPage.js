@@ -20,7 +20,7 @@ export const ArticlesPage = () => {
     <>
       <Switch>
         <Route exact path={`${path}/:articleId`}>
-          <h1>In the future, this will be an article! Rejoice!</h1>
+          <ArticleComponent />
         </Route>
         <Route exact path={"/articles"}>
           <div className="col" style={{ textAlign: "center" }}>
@@ -61,7 +61,7 @@ const MoreArticles = (props) => {
 
   return (
     <div className="card-deck w-60">
-      <div className="card">
+      {secondArticle !== undefined ? <div className="card">
         <Link to={`articles/${secondArticle.id}`}>
           <img
             className="card-img-top"
@@ -73,9 +73,9 @@ const MoreArticles = (props) => {
           <h5 className="card-title">{secondArticle.name}</h5>
           <p className="card-text">{secondArticle.description}</p>
         </div>
-      </div>
+      </div> : null}
 
-      <div className="card">
+      {oldArticle !== undefined ? <div className="card">
         <Link to={`articles/${oldArticle.id}`}>
           <img
             className="card-img-top"
@@ -87,9 +87,9 @@ const MoreArticles = (props) => {
           <h5 className="card-title">{oldArticle.name}</h5>
           <p className="card-text">{oldArticle.description}</p>
         </div>
-      </div>
+      </div> : null}
 
-      <div className="card">
+      {olderArticle !== undefined ? <div className="card">
         <Link to={`articles/${olderArticle.id}`}>
           <img
             className="card-img-top"
@@ -101,7 +101,7 @@ const MoreArticles = (props) => {
           <h5 className="card-title">{olderArticle.name}</h5>
           <p className="card-text">{olderArticle.description}</p>
         </div>
-      </div>
+      </div> : null}
 
       <div
         className="card text-white bg-secondary"
@@ -118,6 +118,17 @@ const MoreArticles = (props) => {
           <h5 className="card-title">More Articles</h5>
         </div>
       </div>
+    </div>
+  );
+};
+
+const ArticleComponent = () => {
+  let { articleId } = useParams();
+  const result = require(`./articlesComponents/${articleId}`)
+
+  return (
+    <div>
+      {result.article}
     </div>
   );
 };

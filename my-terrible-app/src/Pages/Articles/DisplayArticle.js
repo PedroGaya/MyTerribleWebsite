@@ -2,21 +2,16 @@ import React from "react";
 
 export const DisplayArticle = () => {
   return (
-    <div>
-      <h3 style={{margin: "auto"}}>My most recent article</h3>
-      <small>14/04/2020</small>
+    <div className="w-75"  style={{marginLeft: "auto", marginRight: "auto"}}>
+      <h3 style={{margin: "auto"}}>Why this website exists</h3>
+      <small>16/04/2020</small>
       <br></br>
       <div>
-        <p style={{margin: "auto"}}>This is a short preview of my most recent article.</p>
+        <p style={{margin: "auto"}}>Actually, this exists for no particular reason.</p>
         <p>
-          As a sample of what's going to be here, here are bullet points with
-          some of my favorite anime!
+          Of course, "no particular reason" being a stand-in for I wanted to make this.
+          Not to say that there aren't legimate reasons for having this blog continue its existance; after all, you <i>are</i> reading this.
         </p>
-        <ul style={{ alignSelf: "center", listStylePosition: "inside" }}>
-          <li>Tengen Toppa Gurren Lagann</li>
-          <li>Hunter x Hunter</li>
-          <li>The Monogatari Series</li>
-        </ul>
       </div>
     </div>
   );

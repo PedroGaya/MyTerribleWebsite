@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import { APPS } from "./APPS.js";
 
+import { Neurotype } from "./Components/Neurotype.js";
+
 export const AppsPage = () => {
   let { path, url } = useRouteMatch();
 
@@ -40,9 +42,19 @@ export const AppsPage = () => {
 
 const AppComponent = () => {
   let { appId } = useParams();
+
+  const getApp = (appId) => {
+    switch(appId){
+      case "0":
+        return <Neurotype />
+      default:
+        return <h1>An error ocurred</h1>
+    }
+  }
+
   return (
     <div>
-      <h1>{appId}</h1>
+      {getApp(appId)}
     </div>
   );
 };
