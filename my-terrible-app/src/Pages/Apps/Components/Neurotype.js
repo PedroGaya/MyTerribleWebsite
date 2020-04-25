@@ -3,18 +3,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export const Neurotype = () => {
   const [quizState, setQuizState] = useState("opening");
-  const [settings, setSettings] = useState({ questions: 48 });
+  const [settings, setSettings] = useState({questions: 48})
 
   const Quiz = () => {
     switch (quizState) {
+      case "questions":
+        return <h1>teste</h1>
       case "settings":
-        return <Settings onNext={setQuizState} setSettings={setSettings} />;
+        return <Settings onNext={setQuizState} setSettings={setSettings} settings={settings} />;
       default:
         return <OpeningText onNext={setQuizState} />;
     }
   };
 
-  console.log(settings);
+  console.log(settings)
 
   return <Quiz />;
 };
@@ -49,10 +51,7 @@ const OpeningText = (props) => {
 };
 
 const Settings = (props) => {
-  const { onNext, setSettings } = props;
-  const [choice, setChoice] = useState("48");
-
-  useEffect(() => {console.log(choice)},[choice])
+  const { onNext, setSettings, settings } = props;
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -64,9 +63,9 @@ const Settings = (props) => {
           </label>
           <select
             className="form-control"
-            value={choice}
+            value={settings.questions.toString()}
             onChange={(e) => {
-              setChoice(e.target.value);
+              setSettings({questions: parseInt(e.target.value)});
             }}
           >
             <option value="16">16</option>
@@ -77,6 +76,7 @@ const Settings = (props) => {
           </select>
         </div>
       </form>
+      <button className="btn btn-secondary" onClick={() => {onNext("questions")}}>Next</button>
     </div>
   );
 };
