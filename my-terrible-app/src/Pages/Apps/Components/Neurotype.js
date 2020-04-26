@@ -4,28 +4,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const CHARACTERS = [
   {
     imageUrl: "url",
-    characterInfo: { name: "senjogahara", series: "series" },
-    characterType: { lateral: "lat", impressionistic: "imp" },
+    characterInfo: { name: "kobayashi", series: "series" },
+    characterType: { lateral: "65", impressionistic: "20" },
   },
   {
     imageUrl: "url",
-    characterInfo: { name: "hanekawa", series: "series" },
-    characterType: { lateral: "lat", impressionistic: "imp" },
+    characterInfo: { name: "shiroe", series: "series" },
+    characterType: { lateral: "90", impressionistic: "30" },
   },
   {
     imageUrl: "url",
-    characterInfo: { name: "mayoi", series: "series" },
-    characterType: { lateral: "lat", impressionistic: "imp" },
+    characterInfo: { name: "watashi", series: "series" },
+    characterType: { lateral: "75", impressionistic: "45" },
   },
   {
     imageUrl: "url",
-    characterInfo: { name: "kanbaru", series: "series" },
-    characterType: { lateral: "lat", impressionistic: "imp" },
+    characterInfo: { name: "tsukimoto", series: "series" },
+    characterType: { lateral: "90", impressionistic: "20" },
   },
   {
     imageUrl: "url",
-    characterInfo: { name: "shinobu", series: "series" },
-    characterType: { lateral: "lat", impressionistic: "imp" },
+    characterInfo: { name: "light", series: "series" },
+    characterType: { lateral: "45", impressionistic: "5" },
   },
 ];
 
@@ -39,9 +39,15 @@ export const Neurotype = () => {
 
   const Quiz = () => {
     switch (quizState) {
+      case "finished":
+        return <Finished finalResult={finalResult}/>;
       case "questions":
         return (
-          <Questions onNext={setQuizState} setFinalResult={setFinalResult} />
+          <Questions
+            onNext={setQuizState}
+            setFinalResult={setFinalResult}
+            settings={settings}
+          />
         );
       case "settings":
         return (
@@ -55,6 +61,8 @@ export const Neurotype = () => {
         return <OpeningText onNext={setQuizState} />;
     }
   };
+
+  console.log("the final result is", finalResult);
 
   return <Quiz />;
 };
@@ -138,11 +146,19 @@ const Settings = (props) => {
 
 const CurrentQuestion = (props) => {
   const { imageUrl, characterInfo, characterType, onSubmit, results } = props;
-  const [currentAnswer, setCurrentAnswer] = useState(0);
+  const [currentAnswer, setCurrentAnswer] = useState();
+
+  const getResult = (answer, data) => {
+    return {
+      lateral: parseFloat(answer) * parseFloat(data.lateral),
+      impressionistic: parseFloat(answer) * parseFloat(data.impressionistic),
+    };
+  };
 
   return (
     <>
       <small>How much do you relate to this character's way of thinking?</small>
+      <h1>{characterInfo.name}</h1>
       <div>
         <div className="form-check">
           <input
@@ -239,7 +255,7 @@ const CurrentQuestion = (props) => {
       <button
         className="btn btn-secondary"
         onClick={() => {
-          onSubmit([...results, currentAnswer]);
+          onSubmit([...results, getResult(currentAnswer, characterType)]);
         }}
       >
         Next
@@ -249,17 +265,23 @@ const CurrentQuestion = (props) => {
 };
 
 const Questions = (props) => {
-  const { onNext, setFinalResult } = props;
+  const { onNext, setFinalResult, settings } = props;
   const [curr, setCurr] = useState(0);
 
   const [results, setResults] = useState([]);
 
   const handleSubmit = (results) => {
-    setCurr(curr + 1);
+    if (curr + 1 !== 5) {
+      // CHANGE THIS FIVE TO SETTINGS.QUESTIONS!!!
+      setCurr(curr + 1);
+    } else {
+      var finalResult = getFinalResult(results, settings.questions);
+      setFinalResult(finalResult);
+      onNext("finished");
+    }
+
     setResults(results);
   };
-
-  console.log(results)
 
   const questions = CHARACTERS.map((c) => {
     return (
@@ -276,4 +298,23 @@ const Questions = (props) => {
   });
 
   return questions[curr];
+};
+
+const Finished = (props) => {
+  const { finalResult } = props;
+  return (
+    <>
+      <h1>finished! your final result is: </h1>
+      <p>{`Lateral: ${finalResult.lateral}`}</p>
+      <p>{`Impressionistic: ${finalResult.impressionistic}`}</p>
+    </>
+  );
+};
+
+const getFinalResult = (results, weight) => {
+  var totalLateral = results.reduce((prev, elem) => prev + elem.lateral, 0) / 5; // CHANGE THE FIVE
+  var totalImpress =
+    results.reduce((prev, elem) => prev + elem.impressionistic, 0) / 5;
+
+  return { lateral: totalLateral, impressionistic: totalImpress };
 };
