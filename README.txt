@@ -1,1 +1,1 @@
-this is a text file for initializing and testing git in my laptop.
+This very simple website was made from scratch in a week. Includes some simple functionality and is hosted on my own domain.
